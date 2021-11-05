@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import Navabr from './Navbar';
+import Home from './Home';
 
 function App() {
+  const title = "Welcome to the new blog";
+  const likes = 50;
+  //const person = { name: 'yoshi', age: 30 };
+  //numbers and strings are fine
+  //booleans and object are not
+  const link = "http://www.google.com";
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navabr />
+      <div className="content">
+        <Home />
+      </div>
     </div>
   );
 }
