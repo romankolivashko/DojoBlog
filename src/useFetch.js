@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
@@ -6,7 +6,9 @@ const useFetch = (url) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(url)
+    const abortCont = new AbortController();
+
+    fetch(url, { signal: abortCont.signal })
       .then(res => {
         console.log(res);
         if(!res.ok){
@@ -20,10 +22,14 @@ const useFetch = (url) => {
         setError(null);
       })
       .catch(err => {
-        // console.log(err.message);
-        setIsPeding(false);
-        setError(err.message)
+        if (err.name === 'AbortError'){
+          console.log('fetch aborted')
+        } else {
+          setIsPeding(false);
+          setError(err.message)
+        }
       })
+    return () => abortCont.abort();
   }, [url]);
 
   return {  data, isPending, error };
